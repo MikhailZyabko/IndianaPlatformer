@@ -11,11 +11,11 @@ public class PointLight2D : MonoBehaviour
 
     void OnEnable()
     {
-        Light2D.plList.Add(this);
+        Light2D.pointLightList.Add(this);
     }
 
     void OnDisable()
     {
-        Light2D.plList.Remove(this);
+        Light2D.pointLightList.Remove(this);
     }
 }

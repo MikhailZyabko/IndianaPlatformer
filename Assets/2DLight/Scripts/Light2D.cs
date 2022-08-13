@@ -11,12 +11,14 @@ public class Light2D : MonoBehaviour
     private RenderTexture _mask;
     private Mesh _templateMesh;
 
-    public Color ambientColor;
+    [SerializeField]
+    private Color _ambientColor;
+    public Color AmbientColor => _ambientColor;
 
     [SerializeField]
     private Texture _standartPointLightCookie;
 
-    public static List<PointLight2D> plList = new List<PointLight2D>();
+    public static List<PointLight2D> pointLightList = new List<PointLight2D>();
 
     void OnEnable()
     {
@@ -48,21 +50,21 @@ public class Light2D : MonoBehaviour
 
         _mask = RenderTexture.GetTemporary(Screen.width, Screen.height, 0, RenderTextureFormat.BGRA32);
         buff.SetRenderTarget(_mask);
-        buff.ClearRenderTarget(false, true, ambientColor);
+        buff.ClearRenderTarget(false, true, _ambientColor);
 
         buff.SetGlobalMatrix("unity_MatrixVP", GL.GetGPUProjectionMatrix(cam.projectionMatrix, true) * cam.worldToCameraMatrix);
 
         MaterialPropertyBlock pLightBlock = new MaterialPropertyBlock();
-        foreach (var pLight in plList)
+        foreach (var pointLight in pointLightList)
         {
-            pLightBlock.SetColor("_LightColor", pLight.color);
-            pLightBlock.SetFloat("_Radius", pLight.radius);
-            if(pLight.cookie == null)
+            pLightBlock.SetColor("_LightColor", pointLight.color);
+            pLightBlock.SetFloat("_Radius", pointLight.radius);
+            if(pointLight.cookie == null)
                 pLightBlock.SetTexture("_CookieText", _standartPointLightCookie);
             else
-                pLightBlock.SetTexture("_CookieText", pLight.cookie);
+                pLightBlock.SetTexture("_CookieText", pointLight.cookie);
 
-            buff.DrawMesh(_templateMesh, pLight.transform.localToWorldMatrix, _pointLightMat, 0, -1, pLightBlock);
+            buff.DrawMesh(_templateMesh, pointLight.transform.localToWorldMatrix, _pointLightMat, 0, -1, pLightBlock);
         }
 
         buff.SetGlobalTexture("_LightMaskTexture", _mask);

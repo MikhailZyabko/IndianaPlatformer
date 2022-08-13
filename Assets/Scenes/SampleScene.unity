@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d858db69312fc4c8d7184afc5d7d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ambientColor: {r: 0.05807226, g: 0.05807226, b: 0.14150941, a: 1}
+  _ambientColor: {r: 0.2924528, g: 0.23589355, b: 0.23589355, a: 1}
   _standartPointLightCookie: {fileID: 2800000, guid: c704fe7e523d30e43861e1d9bf4d8a40, type: 3}
 --- !u!20 &519420031
 Camera:
